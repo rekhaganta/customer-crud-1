@@ -1,10 +1,15 @@
 package com.cg.cms.controller;
 
 import java.util.List;
+
+import javax.validation.Valid;
+
 //SLF4J : Simple Logging Facade For Java
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -51,24 +56,25 @@ public class CustomerController {
 
 	@PostMapping("/save")
 	@ApiOperation("Add a Customer Record")
-	public void save(@RequestBody Customer customer) {
+	public ResponseEntity<Customer> save(@Valid @RequestBody Customer customer) {
 		logger.info("Adding a customer : " + customer);
-		service.addCustomer(customer);
-
+		Customer cust = service.addCustomer(customer);
+		return new ResponseEntity<>(cust, HttpStatus.CREATED);
 	}
 
 	@PutMapping("/update")
 	@ApiOperation("Update an Existing Customer Record")
-	public void update(@RequestBody Customer customer) {
+	public void update(@Valid @RequestBody Customer customer) {
 		logger.info("Updating a customer!!");
 		service.updateCustomer(customer);
 	}
 
 	@DeleteMapping("/delete/{id}")
 	@ApiOperation("Delete an Existing Customer Record")
-	public void delete(@PathVariable String id) {
+	public ResponseEntity<Void> delete(@PathVariable String id) {
 		logger.info("Deleting a customer!!");
 		service.delCustomer(Integer.valueOf(id));
+		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 	}
 
 }

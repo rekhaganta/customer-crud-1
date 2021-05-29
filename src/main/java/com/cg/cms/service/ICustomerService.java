@@ -9,7 +9,7 @@ import com.cg.cms.entities.Customer;
 @Service
 public interface ICustomerService {
 
-	void addCustomer(Customer customer);
+	Customer addCustomer(Customer customer);
 
 	List<Customer> fetchAll();
 

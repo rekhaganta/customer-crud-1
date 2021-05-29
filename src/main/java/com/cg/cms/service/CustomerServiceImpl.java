@@ -13,16 +13,16 @@ import com.cg.cms.repository.CustomerRepository;
 
 @Service
 public class CustomerServiceImpl implements ICustomerService {
-	
+
 	Logger logger = LoggerFactory.getLogger(CustomerServiceImpl.class);
 
 	@Autowired
 	private CustomerRepository repository;// repository is a dependency of customerserviceimpl
 
 	@Override
-	public void addCustomer(Customer customer) {
+	public Customer addCustomer(Customer customer) {
 		logger.info("inside addCustomer method of CustomerServiceImpl");
-		repository.save(customer);
+		return repository.save(customer);
 	}
 
 	@Override

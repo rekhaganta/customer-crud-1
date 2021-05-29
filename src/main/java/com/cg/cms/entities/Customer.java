@@ -6,6 +6,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "cust_tbl")
@@ -15,10 +18,16 @@ public class Customer {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 	@Column(name = "fname")
+	@NotNull
+	@Size(min = 2, message = "First Name should have mininum 2 characters!!")
 	private String firstName;
 	@Column(name = "lname")
+	@NotNull
+	@Size(min = 2, message = "Last Name should have mininum 2 characters!!")
 	private String lastName;
+
 	@Column(name = "email")
+	@Email
 	private String email;
 	private String address;
 	@Column(name = "mob")
