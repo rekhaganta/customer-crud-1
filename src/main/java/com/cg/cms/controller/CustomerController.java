@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cg.cms.entities.Customer;
+import com.cg.cms.exception.CustomerNotFoundException;
 import com.cg.cms.service.ICustomerService;
 
 import io.swagger.annotations.ApiOperation;
@@ -42,9 +43,9 @@ public class CustomerController {
 
 	@GetMapping("/getById/{id}")
 	@ApiOperation("Get Customer By ID")
-	public Customer fetchById(@PathVariable String id) {
+	public Customer fetchById(@PathVariable int id) throws NumberFormatException, CustomerNotFoundException {
 		logger.info("Inside fetchById %s", id);
-		return service.fetchById(Integer.valueOf(id));
+		return service.fetchById(id);
 	}
 
 	@GetMapping("/getAll")
@@ -71,9 +72,9 @@ public class CustomerController {
 
 	@DeleteMapping("/delete/{id}")
 	@ApiOperation("Delete an Existing Customer Record")
-	public ResponseEntity<Void> delete(@PathVariable String id) {
+	public ResponseEntity<Void> delete(@PathVariable int id) throws CustomerNotFoundException {
 		logger.info("Deleting a customer!!");
-		service.delCustomer(Integer.valueOf(id));
+		service.delCustomer(id);
 		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 	}
 

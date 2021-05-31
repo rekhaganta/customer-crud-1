@@ -25,12 +25,12 @@ public class Customer {
 	@NotNull
 	@Size(min = 2, message = "Last Name should have mininum 2 characters!!")
 	private String lastName;
-
 	@Column(name = "email")
-	@Email
+	@Email(message = "Enter a valid email address!!")
 	private String email;
 	private String address;
 	@Column(name = "mob")
+//	@Pattern(regexp = "[9-7]{9}")
 	private long mobile;
 
 	public Customer() {

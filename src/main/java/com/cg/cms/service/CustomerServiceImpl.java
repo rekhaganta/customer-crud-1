@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cg.cms.entities.Customer;
+import com.cg.cms.exception.CustomerNotFoundException;
 import com.cg.cms.repository.CustomerRepository;
 
 @Service
@@ -31,7 +32,11 @@ public class CustomerServiceImpl implements ICustomerService {
 	}
 
 	@Override
-	public void delCustomer(int id) {
+	public void delCustomer(int id) throws CustomerNotFoundException {
+		Optional<Customer> customer = repository.findById(id);
+		if (!customer.isPresent())
+			throw new CustomerNotFoundException();
+		
 		repository.deleteById(id);
 	}
 
@@ -41,13 +46,12 @@ public class CustomerServiceImpl implements ICustomerService {
 	}
 
 	@Override
-	public Customer fetchById(int id) {
-		Customer cust = null;
-		Optional<Customer> optional = repository.findById(id);
-		if (optional.isPresent())
-			cust = optional.get();
+	public Customer fetchById(int id) throws CustomerNotFoundException {
+		Optional<Customer> customer = repository.findById(id);
+		if (!customer.isPresent())
+			throw new CustomerNotFoundException();
 
-		return cust;
+		return customer.get();
 	}
 
 }
